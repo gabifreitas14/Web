@@ -1,0 +1,276 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/geral.css' %}"/>
+    {% block estilo %}
+
+    {% endblock estilo %}
+
+    <title>{% block titulo %}{% endblock titulo %}</title>
+
+</head>
+<body>
+<nav id="barra-navegacao" class="navbar navbar-light bg-light navbar-expand-md fixed-top d-block">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+                aria-expanded="false" aria-label="Botão de navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="d-md-none mr-1 ml-1">
+            <a class="navbar-brand mx-auto" href="#">
+                <img class="logo" src="{% static 'images/cortado.png' %}" alt="logo">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse botoes-inicio" id="menu">
+            <div class="navbar-nav mr-0 ml-auto">
+                <a class="nav-link nav-item" href="#">Home</a>
+                <div class="dropdown">
+                    <a class="nav-link nav-item dropdown-toggle" data-toggle="dropdown" href="#">Serviços</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'estetica:facial' %}">Estética Facial</a>
+                        <a class="dropdown-item" href="#">Estética Corporal</a>
+                        {#                        <a class="dropdown-item" href="{% url 'estetica:corporal' %}">Estética Corporal</a>#}
+                        <a class="dropdown-item" href="#">Depilação a Cera</a>
+                        {#                        <a class="dropdown-item" href="{% url 'estetica:depilacao' %}">Depilação a Cera</a>#}
+                    </div>
+                </div>
+                <!--                <a class="nav-link nav-item" href="#servicos">Serviços</a></li>-->
+                <a class="nav-link nav-item" href="#">Galeria</a>
+                {#                                <a class="nav-link nav-item" href="{% url 'estetica:galeria' %}">Galeria</a>#}
+
+            </div>
+            <div class="d-none d-md-block mr-1 ml-1">
+                <a class="navbar-brand mx-auto" href="#">
+                    <img class="logo" src="{% static 'images/cortado.png' %}" alt="logo">
+                </a>
+            </div>
+            <div class="navbar-nav ml-0 mr-auto">
+                <a class="nav-link nav-item" href="{% url 'estetica:sobre' %}">Sobre Mim</a></li>
+                <a class="nav-link nav-item" href="{% url 'estetica:contato' %}">Fale Conosco</a></li>
+            </div>
+        </div>
+
+        <div class="navbar-nav">
+            <div class="form-group has-search">
+                <button class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
+                        href="#admin"
+                        data-toggle="modal" type="submit">Admin
+                </button>
+                <button class="btn btn-outline-secondary my-2 my-sm-0 d-md-none" href="#admin"
+                        data-toggle="modal"
+                        type="submit"><i class="fa fw fa-user" aria-hidden="true"></i></button>
+
+                <!--                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Login</button>-->
+                <!--                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Cadastrar</button>-->
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div>
+    {% block conteudo %}
+
+    {% endblock %}
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="shadow-sm retangulo">
+            <div class="row">
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Estética Facial</h5>
+                    <ul class="">
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}'> Sobrancelha Fio a Fio</a></li>#}
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}'>Design de Sobrancelha</a></li>#}
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}#limpeza'>Limpeza de Pele</a></li>#}
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}#peeling'>Peeling de Diamante</a></li>#}
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}#drenagemFacial'>Drenagem Linfática Facial</a></li>#}
+                        {#                        <li><a href='{% url 'estetica:depilacao' %}#rejuvenescimento'>Rejuvenescimento Facial</a></li>#}
+
+                        <li><a href='#'> Sobrancelha Fio a Fio</a></li>
+                        <li><a href='#'>Design de Sobrancelha</a></li>
+                        <li><a href='#limpeza'>Limpeza de Pele</a></li>
+                        <li><a href='#peeling'>Peeling de Diamante</a></li>
+                        <li><a href='#drenagemFacial'>Drenagem Linfática Facial</a></li>
+                        <li><a href='#rejuvenescimento'>Rejuvenescimento Facial</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Estética Corporal</h5>
+                    <ul class="">
+                        <li><a href='#modeladora'>Massagem Modeladora</a></li>
+                        <li><a href='#massagemRelaxante'>Massagem Relaxante</a></li>
+                        <li><a href='#drenagemCorporal'>Drenagem Linfática Corporal</a></li>
+                        <li><a href='#drenagemPos'>Drenagem Pós-Operatório</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Depilação a Cera</h5>
+                    <ul class="">
+                        <li><a href='#Buço'>Buço</a></li>
+                        <li><a href='#perna'>Pernas</a></li>
+                        <li><a href='#axilas'>Axilas</a></li>
+                        <li><a href='#virilha'>Virilha</a></li>
+                        <li><a href='#nadegas'>Nádegas</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-5">
+                    <h5>Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fw fa-user"></i> Mari Barbosa</li>
+                        <li><i class="fas fw fa-phone"></i> (21)98372-8978</li>
+                        <li><i class="fas fw fa-envelope-square"></i> <a href='mailto:nalva-_-barbosa@hotmail.com'>nalva-_-barbosa@hotmail.com</a>
+                        </li>
+                        <li><i class="fab fw fa-instagram"></i> <a href='https://instagram.com/maribarbosapmu'>@maribarbosapmu</a>
+                        </li>
+                        <li><i class="fab fw fa-facebook"></i> <a href='https://facebook.com/maribarbosapmu'>@maribarbosapmu</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="admin">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Cadastro de Serviço</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="id-form" action="">
+                        <fieldset class="form-group">
+                            <legend class="font-weight-bold">Informações do Serviço</legend>
+
+                            <div class="form-group row">
+                                <label for="nome"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Nome</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control form-control-sm" id="nome"
+                                           placeholder="Informe o nome do serviço">
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tipo"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Tipo</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control form-control-sm" id="tipo">
+                                        <option value="">--- selecione um tipo ---</option>
+                                        <option value="1">Estética Facial</option>
+                                        <option value="2">Estética Corporal</option>
+                                        <option value="3">Depilação</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Prazo
+                                    para resultado</label>
+                                <div class="col-lg-10">
+                                    <div class="form-check custom-control custom-radio">
+                                        <input id="curto-prazo" type="radio" name="prazo" value="c"
+                                               class="custom-control-input">
+                                        <label for="curto-prazo" class="custom-control-label">
+                                            Curto Prazo
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-radio">
+                                        <input id="longo-prazo" type="radio" name="prazo" value="l"
+                                               class="custom-control-input">
+                                        <label for="longo-prazo" class="custom-control-label">
+                                            Longo Prazo
+                                        </label>
+                                    </div>
+                                    <div id="prazo-feedback" class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="descricao"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Descrição</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control form-control-sm" id="descricao"
+                                              rows="3" placeholder="Digite a descrição"></textarea>
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group" style="margin-bottom: 0px;">
+                            <legend class="font-weight-bold">Informações Adicionais</legend>
+                            <div class="form-group row">
+                                <label for="caminho-foto"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Caminho
+                                    para a foto</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control form-control-sm" id="caminho-foto"
+                                           placeholder="Ex: C:\Users\user\Images\foto.jpg">
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Formas
+                                    de Pagamento</label>
+                                <div class="col-lg-10">
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="credito" type="checkbox" name="credito"
+                                               class="custom-control-input pagamento">
+                                        <label for="credito" class="custom-control-label">
+                                            Cartão de Crédito
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="debito" type="checkbox" name="debito"
+                                               class="custom-control-input pagamento">
+                                        <label for="debito" class="custom-control-label">
+                                            Cartão de Débito
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="boleto" type="checkbox" name="boleto"
+                                               class="custom-control-input pagamento">
+                                        <label for="boleto" class="custom-control-label">
+                                            Boleto Bancário
+                                        </label>
+                                    </div>
+                                    <div id="feedback-pagamento" class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group row">
+                            <div class="col-lg-12 enviar">
+                                <button type="submit" class="btn btn-primary text-center">
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'js/popper.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

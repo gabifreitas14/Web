@@ -1,0 +1,83 @@
+#user {
+    font-size: 25px;
+}
+
+
+.botao {
+    position: absolute;
+    bottom: 22%;
+    left: 18%;
+}
+
+.botao-corporal {
+    position: absolute;
+    bottom: 22%;
+    left: 16%;
+}
+
+.botao-like-deslike {
+    background-color: transparent;
+    box-shadow: none;
+    color: grey !important;
+    outline: none;
+    border: 0px transparent;
+    box-sizing: none;
+    background-color: transparent;
+}
+
+botao-like-deslike:focus {
+
+}
+
+.botao-like-deslike:hover {
+    cursor: pointer;
+}
+
+.media img {
+    width: 180px;
+    margin-bottom: 15px;
+    border-radius: 6%;
+}
+
+@media (max-width: 480px) {
+    .jumbotron h3 {
+        font-size: 20px;
+    }
+
+    .jumbotron h4 {
+        font-size: 18px;
+    }
+
+    /* ----------------------  */
+    .media img {
+        width: 90px;
+        margin-bottom: 6px;
+        border-radius: 50%;
+    }
+
+    .media-body h5 {
+        padding-top: 18px;
+        font-size: 15px;
+    }
+
+    .texto-media-body {
+        display: none;
+    }
+
+    /* ----------------------  */
+    blockquote p {
+        font-size: 15px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+
+    h5 {
+        font-size: 16px;
+    }
+
+    .titulo-excursoes {
+        font-size: 15px;
+    }
+}

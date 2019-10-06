@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="../../assets/css/bootstrap.css" rel="stylesheet">
+    <link href="../../assets/css/all.css" rel="stylesheet">
+    <link href="contato.css" rel="stylesheet">
+    <link href="../../assets/css/geral.css" rel="stylesheet">
+
+    <title>Mari Barbosa</title>
+</head>
+
+<body data-spy="scroll" data-target="#barra-navegacao" fixed-top>
+<nav id="barra-navegacao" class="navbar navbar-light bg-light navbar-expand-md fixed-top d-block">
+    <div class="container">
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#menu" aria-controls="menu"
+                aria-expanded="false" aria-label="Botão de navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse botoes-inicio" id="menu">
+            <div class="navbar-nav mr-0 ml-auto">
+                <a class="nav-link nav-item" href="../../index.html">Home</a></li>
+                <div class="dropdown">
+                    <a class="nav-link nav-item dropdown-toggle" data-toggle="dropdown" href="#">Serviços</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="../facial/facial.html">Estética Facial</a>
+                        <a class="dropdown-item" href="#corporal">Estética Corporal</a>
+                        <a class="dropdown-item" href="#depilacao">Depilação</a>
+                        <a class="dropdown-item" href="#sobracelha">Sobrancelha</a>
+
+                    </div>
+                </div>
+                <!--                <a class="nav-link nav-item" href="#servicos">Serviços</a></li>-->
+                <a class="nav-link nav-item" href="#galeria">Galeria</a></li>
+            </div>
+            <div class=" mr-1 ml-1">
+                <a class="navbar-brand mx-auto" href="#">
+                    <img class="logo" src="../../assets/images/cortado.png" alt="logo">
+                </a>
+            </div>
+            <div class="navbar-nav ml-0 mr-auto">
+                <a class="nav-link nav-item" href="../sobre/sobre.html">Sobre Mim</a></li>
+                <a class="nav-link nav-item" href="contato.html">Fale Conosco</a></li>
+            </div>
+        </div>
+
+        <div class="navbar-nav">
+            <button class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block" href="#admin"
+                    data-toggle="modal" type="submit">Admin
+            </button>
+            <button class="btn btn-outline-secondary my-2 my-sm-0 d-md-none" href="#admin" data-toggle="modal"
+                    type="submit"><i class="fa fw fa-user" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<header id="header" class="mb-4 pt-4 mt-5">
+    <img class="d-block w-100" src="../../assets/images/floral.png" alt="Fale Conosco">
+</header>
+
+<div class="container my-4">
+    <!--    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">-->
+    <!--        <div class="toast-header">-->
+    <!--            <img src="./assets/images/flowers.png" class="rounded mr-2" alt="flores">-->
+    <!--            <strong class="mr-auto">Bootstrap</strong>-->
+    <!--            <small>11 mins ago</small>-->
+    <!--            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">-->
+    <!--                <span aria-hidden="true">&times;</span>-->
+    <!--            </button>-->
+    <!--        </div>-->
+    <!--        <div class="toast-body">-->
+    <!--            Hello, world! This is a toast message.-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="block">
+        <div class="row">
+            <div class="col-12 pb-4 pt-2">
+                <h4 id="duvidas" class="mb-0 pt-1 pb-4 ">Tire suas dúvidas:</h4>
+                <form class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                            <label for="primeiroNome">Nome</label>
+                            <input type="text" class="form-control" id="primeiroNome" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                É obrigatório inserir um nome válido.
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4 mb-3">
+                            <label for="sobrenome">Sobrenome</label>
+                            <input type="text" class="form-control" id="sobrenome" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                É obrigatório inserir um sobre nome válido.
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label for="email">Email <span class="text-muted"></span></label>
+                                <input type="email" class="form-control" id="email" placeholder="fulano@exemplo.com"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Por favor, insira um endereço de e-mail válido.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label for="telefone">Telefone <span class="text-muted"></span></label>
+                                <input type="tel" class="form-control" id="telefone" placeholder="(xx)xxxx-xxxx"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Por favor, insira um telefone válido.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="mb-3">
+                                <label for="whatsapp">WhatsApp <span class="text-muted"></span></label>
+                                <input type="tel" pattern="\d{11}$" class="form-control" id="whatsapp"
+                                       placeholder="(xx)xxxxx-xxxx"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Por favor, insira um telefone válido.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="assunto">Assunto <span class="text-muted"></span></label>
+                                <input type="text" class="form-control" id="assunto" placeholder="Ex: Tempo de consulta"
+                                       required>
+                                <div class="invalid-feedback">
+                                    Por favor, insira o assunto.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="mb-3">
+                                <label for="duvida">Dúvida <span class="text-muted"></span></label>
+                                <textarea type="text" class="form-control" id="duvida"
+                                          placeholder="Digite a sua dúvida" rows="3"
+                                          required></textarea>
+                                <div class="invalid-feedback">
+                                    Por favor, a sua dúvida.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12" align="center">
+                            <button type="button" type="submit" class="btn btn-secondary btn-lg text-center"><i
+                                    class="fa fw fa-paper-plane"></i> Enviar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <!--                <hr class="my-4">-->
+                <div class="row pt-4">
+                    <div class="d-md-flex flex-md-equal py-4 col-12 p-0 w-100 my-md-3">
+                        <div class="bg-dark pt-3 w-100 pt-md-5 text-center text-white overflow-hidden"
+                             style="border-radius: 21px;">
+                            <div class="my-2 py-2">
+                                <h2 class="display-5">Agende Gratuitamente uma Avaliação</h2>
+                                <p class="lead">Preencha os dados que, assim que possível, entraremos em contato</p>
+                                <form>
+                                    <div class="row mx-4 my-3">
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Digite o seu nome">
+                                        </div>
+                                        <div class="col">
+                                            <input type="email" class="form-control" placeholder="Digite o seu e-mail">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Digite o seu telefone">
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-lg">Agende aqui</button>
+                                </form>
+                            </div>
+                            <!--        <div class="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <img src="assets/images/panoramica1.jpg">  -->
+    </div>
+
+</div>
+<div class="footer">
+    <div class="container">
+        <div class="shadow-sm retangulo">
+            <div class="row">
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Estética Facial</h5>
+                    <ul class="">
+                        <li><a href='../facial/facial.html#sobrancelhaFioaFio'> Sobrancelha Fio a Fio</a></li>
+                        <li><a href='../facial/facial.html#designSobrancelha'>Design de Sobrancelha</a></li>
+                        <li><a href='../facial/facial.html#limpeza'>Limpeza de Pele</a></li>
+                        <li><a href='../facial/facial.html#peeling'>Peeling de Diamante</a></li>
+                        <li><a href='../facial/facial.html#drenagemFacial'>Drenagem Linfática Facial</a></li>
+                        <li><a href='../facial/facial.html#rejuvenescimento'>Rejuvenescimento Facial</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Estética Corporal</h5>
+                    <ul class="">
+                        <li><a href='#modeladora'>Massagem Modeladora</a></li>
+                        <li><a href='#massagemRelaxante'>Massagem Relaxante</a></li>
+                        <li><a href='#drenagemCorporal'>Drenagem Linfática Corporal</a></li>
+                        <li><a href='#drenagemPos'>Drenagem Pós-Operatório</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-7">
+                    <h5>Depilação a Cera</h5>
+                    <ul class="">
+                        <li><a href='#Buço'>Buço</a></li>
+                        <li><a href='#perna'>Pernas</a></li>
+                        <li><a href='#axilas'>Axilas</a></li>
+                        <li><a href='#virilha'>Virilha</a></li>
+                        <li><a href='#nadegas'>Nádegas</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-sm-5">
+                    <h5>Contato</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fw fa-user"></i> Mari Barbosa</li>
+                        <li><i class="fas fw fa-phone"></i> (21)98372-8978</li>
+                        <li><i class="fas fw fa-envelope-square"></i> <a href='mailto:nalva-_-barbosa@hotmail.com'>nalva-_-barbosa@hotmail.com</a>
+                        </li>
+                        <li><i class="fab fw fa-instagram"></i> <a href='https://instagram.com/maribarbosapmu'>@maribarbosapmu</a>
+                        </li>
+                        <li><i class="fab fw fa-facebook"></i> <a href='https://facebook.com/maribarbosapmu'>@maribarbosapmu</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="admin">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title">Cadastro de Serviço</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="id-form" action="">
+                        <fieldset class="form-group">
+                            <legend class="font-weight-bold">Informações do Serviço</legend>
+
+                            <div class="form-group row">
+                                <label for="nome"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Nome</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control form-control-sm" id="nome"
+                                           placeholder="Informe o nome do serviço">
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="tipo"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Tipo</label>
+                                <div class="col-lg-10">
+                                    <select class="form-control form-control-sm" id="tipo">
+                                        <option value="">--- selecione um tipo ---</option>
+                                        <option value="1">Estética Facial</option>
+                                        <option value="2">Estética Corporal</option>
+                                        <option value="3">Depilação</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Prazo
+                                    para resultado</label>
+                                <div class="col-lg-10">
+                                    <div class="form-check custom-control custom-radio">
+                                        <input id="curto-prazo" type="radio" name="prazo" value="c"
+                                               class="custom-control-input">
+                                        <label for="curto-prazo" class="custom-control-label">
+                                            Curto Prazo
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-radio">
+                                        <input id="longo-prazo" type="radio" name="prazo" value="l"
+                                               class="custom-control-input">
+                                        <label for="longo-prazo" class="custom-control-label">
+                                            Longo Prazo
+                                        </label>
+                                    </div>
+                                    <div id="prazo-feedback" class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="descricao"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Descrição</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" class="form-control form-control-sm" id="descricao"
+                                              rows="3" placeholder="Digite a descrição"></textarea>
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group" style="margin-bottom: 0px;">
+                            <legend class="font-weight-bold">Informações Adicionais</legend>
+                            <div class="form-group row">
+                                <label for="caminho-foto"
+                                       class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Caminho
+                                    para a foto</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control form-control-sm" id="caminho-foto"
+                                           placeholder="Ex: C:\Users\user\Images\foto.jpg">
+                                    <div class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Formas
+                                    de Pagamento</label>
+                                <div class="col-lg-10">
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="credito" type="checkbox" name="credito"
+                                               class="custom-control-input pagamento">
+                                        <label for="credito" class="custom-control-label">
+                                            Cartão de Crédito
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="debito" type="checkbox" name="debito"
+                                               class="custom-control-input pagamento">
+                                        <label for="debito" class="custom-control-label">
+                                            Cartão de Débito
+                                        </label>
+                                    </div>
+                                    <div class="form-check custom-control custom-checkbox">
+                                        <input id="boleto" type="checkbox" name="boleto"
+                                               class="custom-control-input pagamento">
+                                        <label for="boleto" class="custom-control-label">
+                                            Boleto Bancário
+                                        </label>
+                                    </div>
+                                    <div id="feedback-pagamento" class="invalid-feedback">
+                                        Este campo deve ser informado.
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group row">
+                            <div class="col-lg-12 enviar">
+                                <button type="submit" class="btn btn-primary text-center">
+                                    Enviar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/js/jquery-3.3.1.js"></script>
+<script src="../../assets/js/popper.js"></script>
+<script src="../../assets/js/bootstrap.js"></script>
+<script src="../../assets/js/script.js"></script>
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $('.toast').toast('show');-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>
