@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FotoCarousel, DestaqueServico
+from .models import FotoCarousel, DestaqueServico, Servico
 
 
 def index(request):
@@ -10,7 +10,8 @@ def index(request):
 
 
 def facial(request):
-    return render(request, 'facial.html')
+    procedimentos_faciais = Servico.objects.filter(tipo__nome__contains='facial')
+    return render(request, 'facial.html', {'servicos': procedimentos_faciais})
 
 
 def contato(request):

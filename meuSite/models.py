@@ -19,6 +19,7 @@ class TipoServico(models.Model):
 class Servico(models.Model):
     tipo = models.ForeignKey(TipoServico, on_delete=models.CASCADE)
     nome = models.CharField('Servico', max_length=200, db_index=True)
+    tag = models.CharField('Tag', max_length=100, default=' ')
     imagem = models.CharField('Imagem', max_length=200)
     descricao = models.TextField(blank=True)
 
@@ -37,7 +38,7 @@ class Servico(models.Model):
 
 
 class DestaqueServico(models.Model):
-    servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
+    servico = models.ForeignKey(Servico, on_delete=models.CASCADE, null=True, blank=True)
     fraseDestaque = models.CharField('Frase', max_length=200, blank=True)
     descricao = models.TextField(blank=True)
     likes = models.IntegerField('likes', default=0)

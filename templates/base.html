@@ -29,7 +29,7 @@
         </div>
         <div class="collapse navbar-collapse botoes-inicio" id="menu">
             <div class="navbar-nav mr-0 ml-auto">
-                <a class="nav-link nav-item" href="#">Home</a>
+                <a class="nav-link nav-item" href="{% url 'estetica:index' %}">Home</a>
                 <div class="dropdown">
                     <a class="nav-link nav-item dropdown-toggle" data-toggle="dropdown" href="#">Serviços</a>
                     <div class="dropdown-menu">
@@ -92,12 +92,12 @@
                         {#                        <li><a href='{% url 'estetica:depilacao' %}#drenagemFacial'>Drenagem Linfática Facial</a></li>#}
                         {#                        <li><a href='{% url 'estetica:depilacao' %}#rejuvenescimento'>Rejuvenescimento Facial</a></li>#}
 
-                        <li><a href='#'> Sobrancelha Fio a Fio</a></li>
-                        <li><a href='#'>Design de Sobrancelha</a></li>
-                        <li><a href='#limpeza'>Limpeza de Pele</a></li>
-                        <li><a href='#peeling'>Peeling de Diamante</a></li>
-                        <li><a href='#drenagemFacial'>Drenagem Linfática Facial</a></li>
-                        <li><a href='#rejuvenescimento'>Rejuvenescimento Facial</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#sobrancelha_fio_a_fio'> Sobrancelha Fio a Fio</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#design'>Design de Sobrancelha</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#limpeza'>Limpeza de Pele</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#peeling'>Peeling de Diamante</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#drenagem'>Drenagem Linfática Facial</a></li>
+                        <li><a href='{% url 'estetica:facial' %}#rejuvenescimento'>Rejuvenescimento Facial</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-sm-7">

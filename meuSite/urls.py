@@ -6,7 +6,7 @@ app_name = 'estetica'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('', views.facial, name='facial'),
-    path('', views.contato, name='contato'),
-    path('', views.sobre, name='sobre'),
+    path('facial', views.facial, name='facial'),
+    path('contato', views.contato, name='contato'),
+    path('sobre', views.sobre, name='sobre'),
 ]
