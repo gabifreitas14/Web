@@ -4,11 +4,9 @@ from .models import FotoCarousel, DestaqueServico
 
 def index(request):
     fotos_carousel = FotoCarousel.objects.all()
-    destaques = DestaqueServico.objects.order_by("likes")
+    destaques = DestaqueServico.objects.all().order_by('ordem')
 
-    return render(request, 'index.html',
-                  {'fotosCarousel': fotos_carousel},
-                  {'destaques': destaques})
+    return render(request, 'index.html', {'fotos_carousel': fotos_carousel, 'destaques': destaques})
 
 
 def facial(request):

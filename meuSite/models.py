@@ -40,8 +40,9 @@ class DestaqueServico(models.Model):
     servico = models.ForeignKey(Servico, on_delete=models.CASCADE)
     fraseDestaque = models.CharField('Frase', max_length=200, blank=True)
     descricao = models.TextField(blank=True)
-    likes = models.IntegerField('likes', max_length=10000, default=0)
-    dislikes = models.IntegerField('dislikes', max_length=10000, default=0)
+    likes = models.IntegerField('likes', default=0)
+    dislikes = models.IntegerField('dislikes', default=0)
+    ordem = models.IntegerField('ordem', default=0)
 
     class Meta:
         db_table = 'destaqueServico'
