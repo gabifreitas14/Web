@@ -25,6 +25,17 @@ def sobre(request):
     return render(request, 'sobre.html')
 
 
+def pesquisa(request):
+    if request.method == 'GET':
+        palavra = request.GET.get('input-pesquisa')
+        lista_servicos = Servico.objects.filter(nome__contains=palavra)
+        if lista_servicos.count() == 0:
+            messages.add_message(request, messages.ERROR, 'Nada foi encontrado.')
+        else:
+            messages.add_message(request, messages.INFO, 'Pesquisa por "'+palavra+'" realizada com sucesso!')
+        return render(request, 'servico_listar.html', {'servicos': lista_servicos})
+    return redirect('estetica:servico_listar')
+
 def servico_listar(request):
     servicos = Servico.objects.all().order_by('nome')
     return render(request, 'servico_listar.html', {'servicos': servicos})

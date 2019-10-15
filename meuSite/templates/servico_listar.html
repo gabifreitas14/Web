@@ -28,6 +28,19 @@
                     </div>
                     <hr class="mb-5">
                 </div>
+                <div class="col-12">
+                    <form type="get" action="{% url 'estetica:pesquisa' %}" style="margin: 0">
+                        <div class="input-group mb-3">
+                            <input id="input-pesquisa" name="input-pesquisa" type="text" class="form-control"
+                                   placeholder="Pesquise pelo nome do serviço">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit" id="botao-pesquisa">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
             </div>
             {% if messages %}
