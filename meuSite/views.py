@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
-from meuSite.forms import ServicoForm, RemoveServicoForm
+from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm
 from .models import FotoCarousel, DestaqueServico, Servico
+from django.core.paginator import Paginator
+
 
 
 def index(request):
@@ -26,19 +28,22 @@ def sobre(request):
 
 
 def pesquisa(request):
-    if request.method == 'GET':
-        palavra = request.GET.get('input-pesquisa')
+    form = PesquisaServicoForm(request.GET)
+    if form.is_valid():
+        palavra = form.cleaned_data['nome']
         lista_servicos = Servico.objects.filter(nome__contains=palavra)
+        paginator = Paginator(lista_servicos, 5)
+        pagina = request.GET.get('pagina')
+        servicos = paginator.get_page(pagina)
         if lista_servicos.count() == 0:
             messages.add_message(request, messages.ERROR, 'Nada foi encontrado.')
-        else:
-            messages.add_message(request, messages.INFO, 'Pesquisa por "'+palavra+'" realizada com sucesso!')
-        return render(request, 'servico_listar.html', {'servicos': lista_servicos})
-    return redirect('estetica:servico_listar')
+        return render(request, 'servico_listar.html', {'form': form, 'servicos': servicos})
+    return redirect('estetica:pesquisa')
 
 def servico_listar(request):
+    form = PesquisaServicoForm(request.GET)
     servicos = Servico.objects.all().order_by('nome')
-    return render(request, 'servico_listar.html', {'servicos': servicos})
+    return render(request, 'servico_listar.html', {'servicos': servicos, 'form': form})
 
 
 def servico_editar(request, id_servico):
@@ -56,7 +61,7 @@ def servico_remover(request, servico_id):
     form = RemoveServicoForm(initial={'servico_id': servico_id})
     servico.delete()
     messages.add_message(request, messages.INFO, 'Serviço removido com sucesso.')
-    return redirect('estetica:servico_listar')
+    return redirect('estetica:pesquisa')
 
     #   else:
     #      raise ValueError('Ocorreu um erro inesperado ao tentar remover um produto.')
@@ -76,7 +81,7 @@ def cadastro(request):
                 messages.add_message(request, messages.INFO, 'Serviço alterado com sucesso!')
             else:
                 messages.add_message(request, messages.INFO, 'Serviço cadastrado com sucesso!')
-            return redirect('estetica:servico_listar')
+            return redirect('estetica:pesquisa')
         else:
             messages.add_message(request, messages.ERROR, 'Corrija o(s) erro(s) abaixo.')
     else:
