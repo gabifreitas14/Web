@@ -2,6 +2,21 @@ from django import forms
 from meuSite.models import Servico, TipoServico
 
 
+class PesquisaServicoForm(forms.Form):
+    class Meta:
+        fields = ('nome')
+
+    nome = forms.CharField(
+        widget=forms.TextInput(attrs={'class': 'form-control', 'maxlength': '120', 'placeholder': "Pesquise pelo nome do serviço"}),
+        required=False)
+
+    # <input type='text'
+    #        name='nome'
+    #        id='id_nome'
+    #        class='form-control form-control-sm'
+    #        maxlength='120'>
+
+
 class RemoveServicoForm(forms.Form):
     class Meta:
         fields = ('servico_id')

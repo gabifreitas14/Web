@@ -1,8 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
-from meuSite.forms import ServicoForm, RemoveServicoForm
+from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm
 from .models import FotoCarousel, DestaqueServico, Servico
+from django.core.paginator import Paginator
+
 
 
 def index(request):
@@ -30,21 +32,26 @@ def sobre(request):
 
 
 def pesquisa(request):
-    if request.method == 'GET':
-        palavra = request.GET.get('input-pesquisa')
+    form = PesquisaServicoForm(request.GET)
+    if form.is_valid():
+        palavra = form.cleaned_data['nome']
         lista_servicos = Servico.objects.filter(nome__contains=palavra)
+        paginator = Paginator(lista_servicos, 5)
+        pagina = request.GET.get('pagina')
+        servicos = paginator.get_page(pagina)
         if lista_servicos.count() == 0:
             messages.add_message(request, messages.ERROR, 'Nada foi encontrado.')
         else:
-            messages.add_message(request, messages.INFO, 'Pesquisa por "' + palavra + '" realizada com sucesso!')
-        return render(request, 'servico_listar.html', {'servicos': lista_servicos})
+            messages.add_message(request, messages.INFO, 'Pesquisa por "'+palavra+'" realizada com sucesso!')
+        return render(request, 'servico_listar.html', {'form': form,'servicos': lista_servicos})
     return redirect('estetica:servico_listar')
 
 
 def servico_listar(request):
+    form = PesquisaServicoForm(request.GET)
     servicos = Servico.objects.all().order_by('nome')
     current_user = request.user
-    return render(request, 'servico_listar.html', {'servicos': servicos, 'user': current_user})
+    return render(request, 'servico_listar.html', {'servicos': servicos, 'form': form, 'user': current_user})
 
 
 def servico_editar(request, id_servico):
@@ -62,7 +69,7 @@ def servico_remover(request, servico_id):
     form = RemoveServicoForm(initial={'servico_id': servico_id})
     servico.delete()
     messages.add_message(request, messages.INFO, 'Serviço removido com sucesso.')
-    return redirect('estetica:servico_listar')
+    return redirect('estetica:pesquisa')
 
     #   else:
     #      raise ValueError('Ocorreu um erro inesperado ao tentar remover um produto.')
