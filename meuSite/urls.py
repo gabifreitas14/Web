@@ -6,6 +6,7 @@ app_name = 'estetica'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('login', views.login, name='login'),
     path('facial', views.facial, name='facial'),
     path('contato', views.contato, name='contato'),
     path('sobre', views.sobre, name='sobre'),
@@ -14,4 +15,5 @@ urlpatterns = [
     path('servico/editar/<int:id_servico>/', views.servico_editar, name='servico_editar'),
     path('servico/deletado/<int:servico_id>', views.servico_remover, name='servico_remover'),
     path('servico/pesquisa', views.pesquisa, name='pesquisa'),
+
 ]

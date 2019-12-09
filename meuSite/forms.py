@@ -61,3 +61,5 @@ class ServicoForm(forms.ModelForm):
     descricao = forms.CharField(
         widget=forms.Textarea(attrs={'class': 'form-control form-control-sm'}),
         required=False)
+
+    user_id = forms.CharField(widget=forms.HiddenInput(), required=False)

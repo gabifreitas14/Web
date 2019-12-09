@@ -63,6 +63,7 @@
                 <tr>
                     <th scope="col">Serviço</th>
                     <th scope="col">Tipo</th>
+                    <th scope="col">Cadastrado por</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
@@ -72,6 +73,7 @@
                     <tr>
                         <td>{{ servico.nome }}</td>
                         <td>{{ servico.tipo.nome }}</td>
+                        <td>{{ servico.user }}</td>
                         <td>{{ servico.id }}</td>
                         <td>
                             <a id="botao_editar" href="{% url 'estetica:servico_editar' servico.id %}"
@@ -80,10 +82,16 @@
                             </a>
                         </td>
                         <td>
-                            <a id="botao_remover" href="{% url 'estetica:servico_remover' servico.id %}"
-                               class="btn btn-outline-danger">
-                                Remover
-                            </a>
+                            {% if user.username|stringformat:"s" == servico.user|stringformat:"s" %}
+                                <a id="botao_remover" href="{% url 'estetica:servico_remover' servico.id %}"
+                                   class="btn btn-outline-danger">
+                                    Remover
+                                </a>
+
+                            {% else %}
+                                Não tem permissão
+                            {% endif %}
+
                         </td>
                     </tr>
                 {% endfor %}

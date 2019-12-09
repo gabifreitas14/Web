@@ -21,6 +21,10 @@ def contato(request):
     return render(request, 'contato.html')
 
 
+def login(request):
+    return render(request, 'registration/login.html')
+
+
 def sobre(request):
     return render(request, 'sobre.html')
 
@@ -32,13 +36,15 @@ def pesquisa(request):
         if lista_servicos.count() == 0:
             messages.add_message(request, messages.ERROR, 'Nada foi encontrado.')
         else:
-            messages.add_message(request, messages.INFO, 'Pesquisa por "'+palavra+'" realizada com sucesso!')
+            messages.add_message(request, messages.INFO, 'Pesquisa por "' + palavra + '" realizada com sucesso!')
         return render(request, 'servico_listar.html', {'servicos': lista_servicos})
     return redirect('estetica:servico_listar')
 
+
 def servico_listar(request):
     servicos = Servico.objects.all().order_by('nome')
-    return render(request, 'servico_listar.html', {'servicos': servicos})
+    current_user = request.user
+    return render(request, 'servico_listar.html', {'servicos': servicos, 'user': current_user})
 
 
 def servico_editar(request, id_servico):
@@ -71,11 +77,14 @@ def cadastro(request):
         else:
             servico_form = ServicoForm(request.POST)
         if servico_form.is_valid():
-            servico = servico_form.save()
+            servico = servico_form.save(commit=False)
             if servico_id:
+                servico.save()
                 messages.add_message(request, messages.INFO, 'Serviço alterado com sucesso!')
             else:
-                messages.add_message(request, messages.INFO, 'Serviço cadastrado com sucesso!')
+                servico.user = request.user
+                servico.save()
+                messages.add_message(request, messages.INFO, 'Serviç!o cadastrado com sucesso')
             return redirect('estetica:servico_listar')
         else:
             messages.add_message(request, messages.ERROR, 'Corrija o(s) erro(s) abaixo.')

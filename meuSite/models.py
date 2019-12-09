@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.urls import reverse
 
@@ -22,6 +23,11 @@ class Servico(models.Model):
     tag = models.CharField('Tag', max_length=100, default=' ')
     imagem = models.CharField('Imagem', max_length=200)
     descricao = models.TextField(blank=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             related_name='servicos',
+                             on_delete=models.DO_NOTHING,
+                             null=True)
+    preco = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     # preco = models.DecimalField(max_digits=10, decimal_places=2)
     # estoque = models.PositiveIntegerField()
@@ -29,6 +35,7 @@ class Servico(models.Model):
 
     class Meta:
         db_table = 'servico'
+        ordering = ('nome',)
 
     # def get_absolute_path(self):
     #     return reverse('produto:exibe_produto', args=[self.id, self.slug])
