@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'css/geral.css' %}"/>
-    {% block estilo %}
 
+    {% block estilo %}
     {% endblock estilo %}
 
     <title>{% block titulo %}{% endblock titulo %}</title>
@@ -53,24 +53,18 @@
             <div class="navbar-nav ml-0 mr-auto">
                 <a class="nav-link nav-item" href="{% url 'estetica:sobre' %}">Sobre Mim</a></li>
                 <a class="nav-link nav-item" href="{% url 'estetica:contato' %}">Fale Conosco</a></li>
+                <a class="nav-link nav-item" href="{% url 'estetica:pacotes' %}">Pacotes</a></li>
             </div>
         </div>
 
         <div class="navbar-nav">
             <div class="form-group has-search">
-{#                <button class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"#}
-{#                        href="#admin"#}
-{#                        data-toggle="modal" type="submit">Admin#}
-{#                </button>#}
+                {#                <button class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"#}
+                {#                        href="#admin"#}
+                {#                        data-toggle="modal" type="submit">Admin#}
+                {#                </button>#}
                 <a class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
                    href="{% url 'estetica:pesquisa' %}">Admin</a>
-
-                <button class="btn btn-outline-secondary my-2 my-sm-0 d-md-none" href="#admin"
-                        data-toggle="modal"
-                        type="submit"><i class="fa fw fa-user" aria-hidden="true"></i></button>
-
-                  <a class="btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
-                   href="{% url 'estetica:login' %}">Login</a>
 
                 <button class="btn btn-outline-secondary my-2 my-sm-0 d-md-none" href="#admin"
                         data-toggle="modal"
@@ -83,11 +77,14 @@
     </div>
 </nav>
 
-<div>
-    {% block conteudo %}
+    <div class="block">
+        {% block conteudo %}
 
-    {% endblock %}
-</div>
+        {% endblock %}
+        <div class="fixed-bottom">
+            <button class="btn btn-primary float-right carrinho mr-4 mb-4"><i class="fas fa-shopping-cart"></i></button>
+        </div>
+    </div>
 <div class="footer">
     <div class="container">
         <div class="shadow-sm retangulo">

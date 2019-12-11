@@ -61,13 +61,16 @@
             {% endif %}
             <table class="table table-borderless">
                 <thead>
-                <tr>
+                {% if servicos %}
+                 <tr>
                     <th scope="col">Serviço</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Cadastrado por</th>
                     <th scope="col"></th>
                     <th scope="col"></th>
                 </tr>
+                {% endif %}
+
                 </thead>
                 <tbody>
                 {% for servico in servicos %}

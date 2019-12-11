@@ -6,7 +6,6 @@ from .models import FotoCarousel, DestaqueServico, Servico
 from django.core.paginator import Paginator
 
 
-
 def index(request):
     fotos_carousel = FotoCarousel.objects.all()
     destaques = DestaqueServico.objects.all().order_by('ordem')
@@ -41,10 +40,8 @@ def pesquisa(request):
         servicos = paginator.get_page(pagina)
         if lista_servicos.count() == 0:
             messages.add_message(request, messages.ERROR, 'Nada foi encontrado.')
-        else:
-            messages.add_message(request, messages.INFO, 'Pesquisa por "'+palavra+'" realizada com sucesso!')
-        return render(request, 'servico_listar.html', {'form': form,'servicos': lista_servicos})
-    return redirect('estetica:servico_listar')
+        return render(request, 'servico_listar.html', {'form': form, 'servicos': servicos})
+    return redirect('estetica:pesquisa')
 
 
 def servico_listar(request):
@@ -92,9 +89,14 @@ def cadastro(request):
                 servico.user = request.user
                 servico.save()
                 messages.add_message(request, messages.INFO, 'Serviç!o cadastrado com sucesso')
-            return redirect('estetica:servico_listar')
+            return redirect('estetica:pesquisa')
         else:
             messages.add_message(request, messages.ERROR, 'Corrija o(s) erro(s) abaixo.')
     else:
         servico_form = ServicoForm()
     return render(request, 'servico_editar.html', {'form': servico_form})
+
+
+def pacotes(request):
+    servicos = Servico.objects.all().order_by('tipo__nome')
+    return render(request, 'pacotes.html', {'servicos': servicos})
