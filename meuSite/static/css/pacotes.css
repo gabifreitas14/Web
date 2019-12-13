@@ -1,37 +1,3 @@
-#user {
-    font-size: 25px;
-}
-
-
-.botao {
-    position: absolute;
-    bottom: 22%;
-    left: 18%;
-}
-
-.botao-corporal {
-    position: absolute;
-    bottom: 22%;
-    left: 16%;
-}
-
-.botao-like-deslike {
-    background-color: transparent;
-    box-shadow: none;
-    color: grey !important;
-    outline: none;
-    border: 0 transparent;
-    box-sizing: unset;
-}
-
-botao-like-deslike:focus {
-
-}
-
-.botao-like-deslike:hover {
-    cursor: pointer;
-}
-
 .media img {
     width: 180px;
     margin-bottom: 15px;
@@ -79,4 +45,12 @@ botao-like-deslike:focus {
     .titulo-excursoes {
         font-size: 15px;
     }
+}
+
+.tamanho-foto-card {
+    height: 232px;
+}
+
+.tamanho-card {
+    height: 490px;
 }

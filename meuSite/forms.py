@@ -1,4 +1,6 @@
 from django import forms
+from django.core.validators import RegexValidator
+
 from meuSite.models import Servico, TipoServico
 
 
@@ -7,7 +9,8 @@ class PesquisaServicoForm(forms.Form):
         fields = ('nome')
 
     nome = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-control', 'maxlength': '120', 'placeholder': "Pesquise pelo nome do serviço"}),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'maxlength': '120', 'placeholder': "Pesquise pelo nome do serviço"}),
         required=False)
 
     # <input type='text'
@@ -19,9 +22,26 @@ class PesquisaServicoForm(forms.Form):
 
 class RemoveServicoForm(forms.Form):
     class Meta:
-        fields = ('servico_id')
+        fields = 'servico_id'
 
     servico_id = forms.CharField(widget=forms.HiddenInput(), required=True)
+
+
+class CarrinhoForm(forms.Form):
+    class Meta:
+        # model = Carrinho
+        fields = ('servico_id', 'quantidade')
+
+    servico_id = forms.CharField(widget=forms.HiddenInput())
+
+    quantidade = forms.IntegerField(
+        min_value=1,
+        max_value=1000,
+        error_messages={'required': 'Campo obrigatório.', },
+        widget=forms.TextInput(attrs={'class': 'form-control form-control-sm quantidade',
+                                      'maxlength': '20',
+                                      'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57'}),
+        required=True)
 
 
 class ServicoForm(forms.ModelForm):
@@ -78,3 +98,13 @@ class ServicoForm(forms.ModelForm):
         required=False)
 
     user_id = forms.CharField(widget=forms.HiddenInput(), required=False)
+
+    preco = forms.CharField(
+        localize=True,
+        error_messages={'required': 'Campo obrigatório.', },
+        validators=[RegexValidator(regex='^[0-9]{1,7}(,[0-9]{2})?$', message="Informe o valor no formato 9999999,99.")],
+        widget=forms.TextInput(attrs={'class': 'form-control',
+                                      'maxlength': '10',
+                                      'onkeypress': 'return (event.charCode >= 48 && event.charCode <= 57) || '
+                                                    'event.charCode == 44'}),
+        required=True)

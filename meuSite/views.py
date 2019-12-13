@@ -1,9 +1,13 @@
+from decimal import Decimal
+
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
-from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm
+from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm, CarrinhoForm
 from .models import FotoCarousel, DestaqueServico, Servico
 from django.core.paginator import Paginator
+from django.db.models import Sum, F, FloatField
+from meuSite.carrinho import Carrinho
 
 
 def index(request):
@@ -16,6 +20,13 @@ def index(request):
 def facial(request):
     procedimentos_faciais = Servico.objects.filter(tipo__nome__contains='facial')
     return render(request, 'facial.html', {'servicos': procedimentos_faciais})
+
+
+def servico(request, servico_id, tag_servico):
+    serv = get_object_or_404(Servico, id=servico_id)
+    user = request.user
+    carrinho_form = CarrinhoForm(initial={'quantidade': 0, 'user': user.id, 'servico_id': servico_id})
+    return render(request, 'servico.html', {'servico': serv, 'form_servico': carrinho_form})
 
 
 def contato(request):
@@ -88,7 +99,7 @@ def cadastro(request):
             else:
                 servico.user = request.user
                 servico.save()
-                messages.add_message(request, messages.INFO, 'Serviç!o cadastrado com sucesso')
+                messages.add_message(request, messages.INFO, 'Serviço cadastrado com sucesso')
             return redirect('estetica:pesquisa')
         else:
             messages.add_message(request, messages.ERROR, 'Corrija o(s) erro(s) abaixo.')
@@ -99,4 +110,42 @@ def cadastro(request):
 
 def pacotes(request):
     servicos = Servico.objects.all().order_by('tipo__nome')
-    return render(request, 'pacotes.html', {'servicos': servicos})
+    paginator = Paginator(servicos, 6)
+    pagina = request.GET.get('pagina')
+    servicos_paginados = paginator.get_page(pagina)
+    lista_de_forms = []
+    user = request.user
+    for servico in servicos_paginados:
+        lista_de_forms.append(CarrinhoForm(initial={'quantidade': 0, 'servico_id': servico.id, 'user': user.id}))
+    return render(request, 'pacotes.html', {'lista_forms': zip(servicos_paginados, lista_de_forms)})
+
+
+def carrinho(request):
+    carrinho = Carrinho(request)
+    lista_itens = carrinho.get_servico()
+    servicos_no_carrinho = []
+    lista_de_forms = []
+    total = 0
+    for item in lista_itens:
+        servicos_no_carrinho.append(item['servico'])
+        lista_de_forms.append(CarrinhoForm(initial={'quantidade': item['quantidade']}))
+        total += int(item['quantidade']) * Decimal(item['preco'])
+
+    return render(request, 'carrinho.html',
+                  {'listas': zip(servicos_no_carrinho, lista_de_forms),
+                   'total': total})
+
+
+def adicionar_ao_carrinho(request):
+    form = CarrinhoForm(request.POST)
+    # servico_id = request.POST.get('servico_id')
+    if form.is_valid():
+        quantidade = form.cleaned_data['quantidade']
+        servico_id = form.cleaned_data["servico_id"]
+
+        carrinho_novo = Carrinho(request)
+        carrinho_novo.adicionar(servico_id, quantidade)
+        return carrinho(request)
+    else:
+        print(form.errors)
+        raise ValueError('Ocorreu um erro inesperado ao adicionar um  produto ao carrinho')

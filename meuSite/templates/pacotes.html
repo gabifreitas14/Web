@@ -6,33 +6,63 @@
 {% endblock %}
 
 {% block estilo %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/facial.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pacotes.css' %}"/>
 {% endblock estilo %}
 
 {% block conteudo %}
     {% static "images" as baseUrl %}
 
-    <header id="header" class="mb-4" style="margin-top: 120px;">
-        <img class="d-block w-100" src="{{ baseUrl }}/carousel-facial.png" alt="Tratamentos Faciais">
-    </header>
-    <div class="container mb-4">
-        <h4 id="procedimentos" class="mb-0 pt-4 pb-4">Procedimentos mais procurados:</h4>
-
+    {#    <header id="header" class="mb-4" style="margin-top: 120px;">#}
+    {#        <img class="d-block w-100" src="{{ baseUrl }}/carousel-facial.png" alt="Tratamentos Faciais">#}
+    {#    </header>#}
+    <div class="container mb-4" style="margin-top: 130px;">
+        <h4 id="procedimentos" class="mb-0 pt-4 pb-4">Nossos procedimentos:</h4>
+        {% if messages %}
+            <div class="row mb-3">
+                <div class="col-12">
+                    {% for message in messages %}
+                        <ul class="list-group rounded {{ message.tags }}">
+                            {# Supondo a utilização de apenas info e danger #}
+                            <li style="padding-top: 7px; padding-bottom: 7px;"
+                                class="list-group-item list-group-item-{% if message.tags == 'info' %}info{% else %}danger{% endif %}">
+                                {{ message }}
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
         <div class="row mb-4">
-            {% for servico in servicos %}
-                <div class="col-md-6 col-lg-4">
-                    <div class="card shadow mt-3">
-                        <img class=" card-img-top" src="{{ baseUrl }}/{{ servico.imagem }}" alt="servico-img">
+            {% for servico, form_servico in lista_forms %}
+                <div class="col-md-6 col-lg-4 ">
+                    <div class="card tamanho-card shadow mt-3">
+                        <img class="card-img-top tamanho-foto-card" src="{{ baseUrl }}/{{ servico.imagem }}"
+                             alt="servico-img">
                         <div class="card-body">
                             <div class="card-title text-center">
                                 <h5>{{ servico.nome }}</h5>
-                                {#                                <p class="text-secondary font-weight-bold">{{ destaque.fraseDestaque }}</p>#}
+                                <p class="text-secondary font-weight-bold">R${{ servico.preco }}</p>
                                 <div class="row">
                                     <div class="offset-4 col-4">
-                                        <input id="qtd" class="form-control" type="number" min="0" name="qtd">
+                                        {#                                        <input id="qtd" class="form-control" type="number" min="0" name="qtd">#}
+
+                                        <form id="form" action="{% url 'estetica:adicionar_ao_carrinho' %}"
+                                              method="POST" novalidate>
+                                            {% csrf_token %}
+                                            {{ form_servico.quantidade }}
+                                        </form>
+                                        {% if form_servico.tipo.errors %}
+                                            <div class="alert alert-danger mb-0"
+                                                 style="padding-top: 2px; padding-bottom: 2px;">
+                                                {% for error in form_servico.qtd.errors %}
+                                                    <small>{{ error }}</small>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
                                     </div>
                                     <div class="col-12 pt-2">
-                                        <button class="btn btn-sm btn-secondary pt-1">Adicionar <i class="fas fa-cart-plus"></i></button>
+                                        <button id="botao" class="btn btn-sm btn-secondary pt-1">Adicionar <i
+                                                class="fas fa-cart-plus"></i></button>
                                     </div>
                                 </div>
                             </div>
@@ -50,220 +80,51 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="row">
-            <div class="d-md-flex flex-md-equal py-4 col-12 p-0 w-100 my-md-3">
-                <div class="bg-dark pt-3 w-100 pt-md-5 text-center text-white overflow-hidden"
-                     style="border-radius: 21px;">
-                    <div class="my-2 py-2">
-                        <h2 class="display-5">Agende Gratuitamente uma Avaliação</h2>
-                        <p class="lead">Preencha os dados que, assim que possível, entraremos em contato</p>
-                        <form>
-                            <div class="row mx-4 my-3">
-                                <div class="col">
-                                    <input type="text" class="form-control" placeholder="Digite o seu nome">
-                                </div>
-                                <div class="col">
-                                    <input type="email" class="form-control" placeholder="Digite o seu e-mail">
-                                </div>
-                                <div class="col">
-                                    <input type="text" class="form-control" placeholder="Digite o seu telefone">
-                                </div>
-                            </div>
-                            <button type="button" class="btn btn-primary btn-lg">Agende aqui</button>
-                        </form>
-                    </div>
-                </div>
+        <div class='row' style='font-size: 14px;'>
+            <div class='col-12 pt-4'>
+                {% if servicos.has_other_pages %}
+                    <ul class='pagination justify-content-center'>
+                        {% if servicos.has_previous %}
+                            <li class='page-item'><a class='page-link'
+                                                     href='?pagina={{ servicos.previous_page_number }}'>Anterior</a>
+                            </li>
+                        {% else %}
+                            <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Anterior</a>
+                            </li>
+                        {% endif %}
+                        {% for i in servicos.paginator.page_range %}
+                            {% if servicos.number == i %}
+                                <li class='page-item active'><a class='page-link' href='#'>{{ i }} </a></li>
+                            {% else %}
+                                <li class='page-item'><a class='page-link'
+                                                         href='?pagina={{ i }}'>{{ i }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if servicos.has_next %}
+                            <li class='page-item'><a class='page-link'
+                                                     href='?pagina={{ servicos.next_page_number }}'>Próxima</a>
+                            </li>
+                        {% else %}
+                            <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Próxima</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
+
     </div>
 
-    <div class="container my-4">
-        <div class="block">
-            <div class="row">
-                <div class="col-12 p-4">
-                    <h4 id="procedimentosFaciais" class="mb-0 pt-4 pb-4">Procedimentos Faciais:</h4>
-                </div>
-                <div class="col-12">
-                    {% for servico in servicos %}
-                        <div class="col-12" id="{{ servico.tag }}">
-                            <div class="card mb-3" data-toggle="tooltip" data-placement="top"
-                                 title="Clique para realizar o agendamento">
-                                <div class="row no-gutters">
-                                    <div class="d-md-none col-12">
-                                        <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
-                                    </div>
-
-                                    <div class="d-md-none col-12">
-                                        <div class="card-body">
-                                            <h4 class="card-title">{{ servico.nome }}</h4>
-                                            <p class="card-text">{{ servico.descricao }}</p>
-                                            <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
-                                        </div>
-                                    </div>
-                                    {% if forloop.counter0|divisibleby:2 == 0 %}
-                                        <div class="col-6 d-none d-md-inline-block">
-                                            <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
-                                        </div>
-
-                                        <div class="col-6 d-none d-md-inline-block">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ servico.nome }}</h4>
-                                                <p class="card-text">{{ servico.descricao }}</p>
-                                                <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
-                                            </div>
-                                        </div>
-                                    {% else %}
-                                        <div class="col-6 d-none d-md-inline-block">
-                                            <div class="card-body">
-                                                <h4 class="card-title">{{ servico.nome }}</h4>
-                                                <p class="card-text">{{ servico.descricao }}</p>
-                                                <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
-                                            </div>
-                                        </div>
-                                        <div class="col-6 d-none d-md-inline-block">
-                                            <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="modal fade" id="admin">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="modal-title">Cadastro de Serviço</span>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="id-form" action="">
-                            <fieldset class="form-group">
-                                <legend class="font-weight-bold">Informações do Serviço</legend>
-
-                                <div class="form-group row">
-                                    <label for="nome"
-                                           class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Nome</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control form-control-sm" id="nome"
-                                               placeholder="Informe o nome do serviço">
-                                        <div class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="tipo"
-                                           class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Tipo</label>
-                                    <div class="col-lg-10">
-                                        <select class="form-control form-control-sm" id="tipo">
-                                            <option value="">--- selecione um tipo ---</option>
-                                            <option value="1">Estética Facial</option>
-                                            <option value="2">Estética Corporal</option>
-                                            <option value="3">Depilação</option>
-                                        </select>
-                                        <div class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Prazo
-                                        para resultado</label>
-                                    <div class="col-lg-10">
-                                        <div class="form-check custom-control custom-radio">
-                                            <input id="curto-prazo" type="radio" name="prazo" value="c"
-                                                   class="custom-control-input">
-                                            <label for="curto-prazo" class="custom-control-label">
-                                                Curto Prazo
-                                            </label>
-                                        </div>
-                                        <div class="form-check custom-control custom-radio">
-                                            <input id="longo-prazo" type="radio" name="prazo" value="l"
-                                                   class="custom-control-input">
-                                            <label for="longo-prazo" class="custom-control-label">
-                                                Longo Prazo
-                                            </label>
-                                        </div>
-                                        <div id="prazo-feedback" class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="descricao"
-                                           class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Descrição</label>
-                                    <div class="col-lg-10">
-                                    <textarea type="text" class="form-control form-control-sm" id="descricao"
-                                              rows="3" placeholder="Digite a descrição"></textarea>
-                                        <div class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset class="form-group" style="margin-bottom: 0px;">
-                                <legend class="font-weight-bold">Informações Adicionais</legend>
-                                <div class="form-group row">
-                                    <label for="caminho-foto"
-                                           class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Caminho
-                                        para a foto</label>
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control form-control-sm" id="caminho-foto"
-                                               placeholder="Ex: C:\Users\user\Images\foto.jpg">
-                                        <div class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-form-label col-lg-2 text-lg-right text-left font-weight-bold">Formas
-                                        de Pagamento</label>
-                                    <div class="col-lg-10">
-                                        <div class="form-check custom-control custom-checkbox">
-                                            <input id="credito" type="checkbox" name="credito"
-                                                   class="custom-control-input pagamento">
-                                            <label for="credito" class="custom-control-label">
-                                                Cartão de Crédito
-                                            </label>
-                                        </div>
-                                        <div class="form-check custom-control custom-checkbox">
-                                            <input id="debito" type="checkbox" name="debito"
-                                                   class="custom-control-input pagamento">
-                                            <label for="debito" class="custom-control-label">
-                                                Cartão de Débito
-                                            </label>
-                                        </div>
-                                        <div class="form-check custom-control custom-checkbox">
-                                            <input id="boleto" type="checkbox" name="boleto"
-                                                   class="custom-control-input pagamento">
-                                            <label for="boleto" class="custom-control-label">
-                                                Boleto Bancário
-                                            </label>
-                                        </div>
-                                        <div id="feedback-pagamento" class="invalid-feedback">
-                                            Este campo deve ser informado.
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <div class="form-group row">
-                                <div class="col-lg-12 enviar">
-                                    <button type="submit" class="btn btn-primary text-center">
-                                        Enviar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- <img src="assets/images/panoramica1.jpg">  -->
 {% endblock conteudo %}
+
+{% block domready %}
+
+    $("#botao").click(function() {
+    $("#form").append('{{ servico.id }}')
+    $("#form").append('{{ form_servico.quantidade }}')
+    $("#form").submit()
+    })
+{% endblock %}

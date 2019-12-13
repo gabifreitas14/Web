@@ -103,6 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CARRINHO_SESSION_ID='carrinho'
 
 LOGIN_URL = '/autenticacao/login/'
 LOGIN_REDIRECT_URL = ''  # default: /accounts/profile/

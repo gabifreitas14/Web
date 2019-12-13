@@ -25,8 +25,9 @@
                 <div class="col-12">
                     {% for servico in servicos %}
                         <div class="col-12" id="{{ servico.tag }}">
-                            <div class="card mb-3" data-toggle="tooltip" data-placement="top"
-                                 title="Clique para realizar o agendamento">
+                            <a class="card mb-3" data-toggle="tooltip" data-placement="top"
+                               title="Clique para mais informações"
+                               href="{{ servico.get_absolute_path }}">
                                 <div class="row no-gutters">
                                     <div class="d-md-none col-12">
                                         <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
@@ -64,7 +65,7 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}
+    Estética Facial
+{% endblock %}
+
+{% block estilo %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/facial.css' %}"/>
+{% endblock estilo %}
+
+{% block conteudo %}
+    {% static "images" as baseUrl %}
+
+    <header id="header" class="mb-4" style="margin-top: 120px;">
+        {#        <img class="d-block w-100" src="{{ baseUrl }}/carousel-facial.png" alt="Tratamentos Faciais">#}
+    </header>
+
+    <div class="container my-4">
+        <div class="block">
+            <div class="row">
+                <div class="col-12 p-4">
+                    {#                    <h4 id="procedimentosFaciais" class="mb-0 pt-4 pb-4">Procedimentos Faciais:</h4>#}
+                </div>
+                <div class="col-12" id="{{ servico.tag }}">
+                    <div class="card mb-3">
+                        <div class="row no-gutters">
+                            <div class="col-6 d-none d-md-inline-block">
+                                <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
+                            </div>
+
+                            <div class="col-6 d-none text-center d-md-inline-block">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ servico.nome }}</h4>
+                                    <p class="text-secondary font-weight-bold">R${{ servico.preco }}</p>
+                                    <div class="row">
+                                        <div class="offset-4 col-4">
+                                            {#                                        <input id="qtd" class="form-control" type="number" min="0" name="qtd">#}
+
+                                            <form id="form" action="{% url 'estetica:adicionar_ao_carrinho' %}"
+                                                  method="POST" novalidate>
+                                                {% csrf_token %}
+                                                {{ form_servico.quantidade }}
+                                            </form>
+                                            {% if form_servico.tipo.errors %}
+                                                <div class="alert alert-danger mb-0"
+                                                     style="padding-top: 2px; padding-bottom: 2px;">
+                                                    {% for error in form_servico.qtd.errors %}
+                                                        <small>{{ error }}</small>
+                                                    {% endfor %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-12 pt-3">
+                                            <button type="button" id="botao" class="btn btn-sm btn-secondary pt-1">Adicionar <i
+                                                    class="fas fa-cart-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    {#                                    <p class="card-text">{{ servico.descricao }}</p>#}
+                                    <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <img src="assets/images/panoramica1.jpg">  -->
+{% endblock conteudo %}
+{% block domready %}
+
+    $("#botao").click(function() {
+    $("#form").append('{{ form_servico.servico_id }}')
+{#    $("#form").append('{{ form_servico.quantidade }}')#}
+    $("#form").submit()
+    })
+{% endblock %}

@@ -13,7 +13,7 @@
         <div class="block">
 
             <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 font-weight-normal">Faça login</h1>
+            <h1 class="h3 mb-3 text-center font-weight-normal">Faça login</h1>
 
             {% if form.non_field_errors %}
                 <div class='row mt-1 mb-3'>
@@ -33,7 +33,7 @@
             <form class="form-signin" action="{% url 'autenticacao:login' %}" method='POST' novalidate>
                 <div class="form-group">
                     <label for="id_username" class="sr-only">Nome de usuário</label>
-                    <div class='col-lg-5'>
+                    <div class='col-lg-5  mx-auto'>
                         {{ form.username }}
                         {% if form.username.errors %}
                             <div class='alert alert-danger mb-0'
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="id_password" class="sr-only">Senha</label>
-                    <div class='col-lg-5'>
+                    <div class='col-lg-5  mx-auto'>
                         {{ form.password }}
                         {% if form.password.errors %}
                             <div class='alert alert-danger mb-0'
@@ -60,14 +60,14 @@
                     </div>
                     {#                    <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required>#}
                 </div>
-                <div class="checkbox mb-3 align-content-center">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Lembrar de mim
-                    </label>
-                </div>
+                {#                <div class="checkbox mb-3 align-content-center">#}
+                {#                    <label>#}
+                {#                        <input type="checkbox" value="remember-me"> Lembrar de mim#}
+                {#                    </label>#}
+                {#                </div>#}
 
                 <div class='form-group row'>
-                    <div class='col-lg-5 offset-lg-1'>
+                    <div class='col-lg-12 text-center'>
                         {% csrf_token %}
                         <input type='hidden' name='next' value='{{ next }}'>
                         <button type='submit' class='btn btn-outline-primary'>
