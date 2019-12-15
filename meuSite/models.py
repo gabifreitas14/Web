@@ -27,7 +27,7 @@ class Servico(models.Model):
                              related_name='servicos',
                              on_delete=models.DO_NOTHING,
                              null=True)
-    preco = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    preco = models.DecimalField('Preco', max_digits=10, decimal_places=2, default=0)
 
     # preco = models.DecimalField(max_digits=10, decimal_places=2)
     # estoque = models.PositiveIntegerField()

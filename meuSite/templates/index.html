@@ -23,13 +23,21 @@
                     <div class="carousel-item {% if forloop.counter == 1 %} active{% endif %}">
                         <img class="d-block w-100" src="{{ baseUrl }}/{{ foto.endereco }}">
                         {% if foto.nome == 'corporal' %}
-                            <button class="botao-corporal btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
-                                    type="submit">
+                            <a href="{% url 'estetica:corporal' %}"
+                               class="botao-corporal btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
+                               type="submit">
                                 AGENDE AQUI
+                            </a>
+                        {% elif foto.nome == 'facial' %}
+                            <button class="botao btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
+                               type="submit"
+                               href="{% url 'estetica:facial' %}">
+                                AGENDE
+                                AQUI
                             </button>
                         {% else %}
                             <button class="botao btn btn-outline-secondary my-2 my-sm-0 d-none d-md-block"
-                                    type="submit">
+                               type="submit">
                                 AGENDE
                                 AQUI
                             </button>
@@ -74,7 +82,8 @@
                         <div class="card-footer">
                             <div class="text-right">
                                 <button class="btn btn-outline-secondary btn-sm"
-                                        onclick="location.href='{% url 'estetica:facial' %}#{{ destaque.servico.tag }}';">Mais informações...
+                                        onclick="location.href='{% url 'estetica:facial' %}#{{ destaque.servico.tag }}';">
+                                    Mais informações...
                                 </button>
                             </div>
                         </div>

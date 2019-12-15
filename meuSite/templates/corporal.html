@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %}
+    Estética Facial
+{% endblock %}
+
+{% block estilo %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/facial.css' %}"/>
+{% endblock estilo %}
+
+{% block conteudo %}
+    {% static "images" as baseUrl %}
+
+    <header id="header" class="mb-4" style="margin-top: 120px;">
+        <img class="d-block w-100" src="{{ baseUrl }}/corporal-header.png" alt="Tratamentos Corporais">
+    </header>
+
+    <div class="container my-4">
+        <div class="block">
+            <div class="row">
+                <div class="col-12 p-4">
+                    <h4 id="procedimentosCorporais" class="mb-0 pt-4 pb-4">Procedimentos Corporais:</h4>
+                </div>
+                <div class="col-12">
+                    {% for servico in servicos %}
+                        <div class="col-12" id="{{ servico.tag }}">
+                            <a class="card mb-3" data-toggle="tooltip" data-placement="top"
+                               title="Clique para mais informações"
+                               href="{{ servico.get_absolute_path }}">
+                                <div class="row no-gutters">
+                                    <div class="d-md-none col-12">
+                                        <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
+                                    </div>
+
+                                    <div class="d-md-none col-12">
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{ servico.nome }}</h4>
+                                            <p class="card-text">{{ servico.descricao }}</p>
+                                            <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                                        </div>
+                                    </div>
+                                    {% if forloop.counter0|divisibleby:2 == 0 %}
+                                        <div class="col-6 d-none d-md-inline-block">
+                                            <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
+                                        </div>
+
+                                        <div class="col-6 d-none d-md-inline-block">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ servico.nome }}</h4>
+                                                <p class="card-text">{{ servico.descricao }}</p>
+                                                <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-6 d-none d-md-inline-block">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{ servico.nome }}</h4>
+                                                <p class="card-text">{{ servico.descricao }}</p>
+                                                <!--                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                                            </div>
+                                        </div>
+                                        <div class="col-6 d-none d-md-inline-block">
+                                            <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock conteudo %}

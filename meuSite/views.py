@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 
-from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm, CarrinhoForm
+from meuSite.forms import ServicoForm, RemoveServicoForm, PesquisaServicoForm, CarrinhoForm, QuantidadeForm
 from .models import FotoCarousel, DestaqueServico, Servico
 from django.core.paginator import Paginator
 from django.db.models import Sum, F, FloatField
@@ -22,10 +22,15 @@ def facial(request):
     return render(request, 'facial.html', {'servicos': procedimentos_faciais})
 
 
+def corporal(request):
+    corporais = Servico.objects.filter(tipo__nome__contains='corporal')
+    return render(request, 'corporal.html', {'servicos': corporais})
+
+
 def servico(request, servico_id, tag_servico):
     serv = get_object_or_404(Servico, id=servico_id)
     user = request.user
-    carrinho_form = CarrinhoForm(initial={'quantidade': 0, 'user': user.id, 'servico_id': servico_id})
+    carrinho_form = CarrinhoForm(initial={'quantidade': 1, 'user': user.id, 'servico_id': servico_id})
     return render(request, 'servico.html', {'servico': serv, 'form_servico': carrinho_form})
 
 
@@ -120,7 +125,7 @@ def pacotes(request):
     return render(request, 'pacotes.html', {'lista_forms': zip(servicos_paginados, lista_de_forms)})
 
 
-def carrinho(request):
+def exibe_carrinho(request):
     carrinho = Carrinho(request)
     lista_itens = carrinho.get_servico()
     servicos_no_carrinho = []
@@ -132,8 +137,21 @@ def carrinho(request):
         total += int(item['quantidade']) * Decimal(item['preco'])
 
     return render(request, 'carrinho.html',
-                  {'listas': zip(servicos_no_carrinho, lista_de_forms),
+                  {'listas': zip(servicos_no_carrinho, lista_de_forms) if len(servicos_no_carrinho) > 0 else None,
                    'total': total})
+
+
+def remove_servico_carrinho(request):
+    form = RemoveServicoForm(request.POST)
+    if form.is_valid():
+        carrinho = Carrinho(request)
+        carrinho.remover(form.cleaned_data['servico_id'])
+
+        return exibe_carrinho(request)
+
+    else:
+        print(form.errors)
+        raise ValueError('Ocorreu um erro inesperado ao adicionar um produto ao carrinho.')
 
 
 def adicionar_ao_carrinho(request):
@@ -142,10 +160,24 @@ def adicionar_ao_carrinho(request):
     if form.is_valid():
         quantidade = form.cleaned_data['quantidade']
         servico_id = form.cleaned_data["servico_id"]
-
         carrinho_novo = Carrinho(request)
         carrinho_novo.adicionar(servico_id, quantidade)
-        return carrinho(request)
+        return exibe_carrinho(request)
     else:
         print(form.errors)
         raise ValueError('Ocorreu um erro inesperado ao adicionar um  produto ao carrinho')
+
+
+def atualiza_qtd_carrinho(request):
+    form = QuantidadeForm(request.POST)
+    if form.is_valid():
+        servico_id = form.cleaned_data['servico_id']
+        quantidade = form.cleaned_data['quantidade']
+
+        carrinho = Carrinho(request)
+        carrinho.alterar(servico_id, quantidade)
+
+        return exibe_carrinho(request)
+    else:
+        print(form.errors)
+        raise ValueError('Ocorreu um erro inesperado ao alterar um serviço ao carrinho.')

@@ -27,11 +27,11 @@ class RemoveServicoForm(forms.Form):
     servico_id = forms.CharField(widget=forms.HiddenInput(), required=True)
 
 
-class CarrinhoForm(forms.Form):
+class QuantidadeForm(forms.Form):
     class Meta:
-        # model = Carrinho
-        fields = ('servico_id', 'quantidade')
+        fields = ('quantidade', 'servico_id')
 
+    # <input type="hidden" name="produto_id" id="id_produto_id" value="xxx">
     servico_id = forms.CharField(widget=forms.HiddenInput())
 
     quantidade = forms.IntegerField(
@@ -44,10 +44,27 @@ class CarrinhoForm(forms.Form):
         required=True)
 
 
+class CarrinhoForm(forms.Form):
+    class Meta:
+        # model = Carrinho
+        fields = ('servico_id', 'quantidade')
+
+    servico_id = forms.CharField(widget=forms.HiddenInput())
+
+    quantidade = forms.IntegerField(
+        min_value=1,
+        max_value=1000,
+        error_messages={'required': 'Campo obrigatório.', },
+        widget=forms.TextInput(attrs={'class': 'quantidade form-control form-control-sm text-center',
+                                      'maxlength': '20',
+                                      'onkeypress': 'return event.charCode >= 48 && event.charCode <= 57'}),
+        required=True)
+
+
 class ServicoForm(forms.ModelForm):
     class Meta:
         model = Servico
-        fields = ('servico_id', 'tipo', 'nome', 'tag', 'imagem', 'descricao')
+        fields = ('servico_id', 'tipo', 'nome', 'preco', 'tag', 'imagem', 'descricao')
 
     servico_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 

@@ -12,134 +12,190 @@
 
 
 {% block conteudo %}
-    <div class="container my-4 espaco-inicio">
-        <div class="block">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col p-0">
-                            <h4 class="my-3">Carrinho</h4>
+    <div id="carrinho">
+        <div class="container my-4 espaco-inicio">
+            <div class="block">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col p-0">
+                                <h4 class="my-3">Carrinho</h4>
+                            </div>
                         </div>
-                        {#                        <div class="col-auto p-0">#}
-                        {#                            <a class="btn btn-outline-secondary mb-2"#}
-                        {#                               href="{% url 'estetica:cadastro' %}">Novo</a>#}
-                        {##}
-                        {#                        </div>#}
+                        <hr class="mb-5">
                     </div>
-                    <hr class="mb-5">
                 </div>
-                {#                <div class="col-12">#}
-                {#                    <form type="get" action="{% url 'estetica:pesquisa' %}" style="margin: 0">#}
-                {#                        <div class="input-group mb-3">#}
-                {#                            <input id="input-pesquisa" name="input-pesquisa" type="text" class="form-control"#}
-                {#                                   placeholder="Pesquise pelo nome do serviço">#}
-                {#                            {{ form.nome }}#}
-                {#                            <div class="input-group-append">#}
-                {#                                <button class="btn btn-outline-primary" type="submit" id="botao-pesquisa">#}
-                {#                                    <i class="fa fa-search"></i>#}
-                {#                                </button>#}
-                {#                            </div>#}
-                {#                        </div>#}
-                {#                    </form>#}
+                {#            {% if messages %}#}
+                {#                <div class="row mb-3">#}
+                {#                    <div class="col-12">#}
+                {#                        {% for message in messages %}#}
+                {#                            <ul class="list-group rounded {{ message.tags }}">#}
+                {# Supondo a utilização de apenas info e danger #}
+                {#                                <li style="padding-top: 7px; padding-bottom: 7px;"#}
+                {#                                    class="list-group-item list-group-item-{% if message.tags == 'info' %}info{% else %}danger{% endif %}">#}
+                {#                                    {{ message }}#}
+                {#                                </li>#}
+                {#                            </ul>#}
+                {#                        {% endfor %}#}
+                {#                    </div>#}
                 {#                </div>#}
+                {#            {% endif %}#}
+                {% if listas %}
+                    <table class="table table-borderless">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-center">ID</th>
+                            <th scope="col" class="text-center">Serviço</th>
+                            <th scope="col" class="text-center">Qtd</th>
+                            <th scope="col" class="text-center">Valor</th>
+                            <th scope="col" class="text-center">Total Un.</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody2">
+                        {% for servico, form in listas %}
+                            <tr>
+                                <td class="text-center id pt-3">{{ servico.id }}</td>
+                                <td class="text-center pt-3">{{ servico.nome }}</td>
+                                <td width="15%" class="text-center pt-3">
+                                    <form class="mx-auto" style="width: 60px;"
+                                          action="{% url 'estetica:atualiza_qtd_carrinho' %}"
+                                          method="POST" novalidate>
+                                        {% csrf_token %}
+                                        {{ form.quantidade }}
+                                    </form>
+                                </td>
+                                <td class="text-center pt-3">R${{ servico.preco }}</td>
+                                <td class="text-center pt-3">R${% widthratio form.quantidade.value 1 servico.preco %},00</td>
+                                <td class="text-center pt-3">
+                                    <form style="margin-bottom: 0px;"
+                                          action="{% url 'estetica:remove_servico_carrinho' %}"
+                                          method="post" novalidate>
+                                        {% csrf_token %}
+                                        <button id="botao_remover"
+                                                class="btn btn-outline-danger btn-remove">
+                                            Remover
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="6" class="text-center py-0"><hr class=""></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4"></td>
+                            <td class="text-center">R${{ total }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                {% else %}
+                    <li style="padding-top: 7px; padding-bottom: 7px;"
+                        class="list-group-item list-group-item-info">
+                        Carrinho vazio.
+                    </li>
+                {% endif %}
+                {#            <div class='row' style='font-size: 14px;'>#}
+                {#                <div class='col-12 pt-4'>#}
+                {#                    {% if servicos.has_other_pages %}#}
+                {#                        <ul class='pagination justify-content-center'>#}
+                {#                            {% if servicos.has_previous %}#}
+                {#                                <li class='page-item'><a class='page-link'#}
+                {#                                                         href='?pagina={{ servicos.previous_page_number }}&nome={{ nome }}'>Anterior</a>#}
+                {#                                </li>#}
+                {#                            {% else %}#}
+                {#                                <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Anterior</a>#}
+                {#                                </li>#}
+                {#                            {% endif %}#}
+                {#                            {% for i in servicos.paginator.page_range %}#}
+                {#                                {% if servicos.number == i %}#}
+                {#                                    <li class='page-item active'><a class='page-link' href='#'>{{ i }} </a></li>#}
+                {#                                {% else %}#}
+                {#                                    <li class='page-item'><a class='page-link'#}
+                {#                                                             href='?pagina={{ i }}&nome={{ nome }}'>{{ i }}</a>#}
+                {#                                    </li>#}
+                {#                                {% endif %}#}
+                {#                            {% endfor %}#}
+                {#                            {% if servicos.has_next %}#}
+                {#                                <li class='page-item'><a class='page-link'#}
+                {#                                                         href='?pagina={{ servicos.next_page_number }}&nome={{ nome }}'>Próxima</a>#}
+                {#                                </li>#}
+                {#                            {% else %}#}
+                {#                                <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Próxima</a>#}
+                {#                                </li>#}
+                {#                            {% endif %}#}
+                {#                        </ul>#}
+                {#                    {% endif %}#}
+                {#                </div>#}
+                {#            </div>#}
 
             </div>
-            {#            {% if messages %}#}
-            {#                <div class="row mb-3">#}
-            {#                    <div class="col-12">#}
-            {#                        {% for message in messages %}#}
-            {#                            <ul class="list-group rounded {{ message.tags }}">#}
-            {# Supondo a utilização de apenas info e danger #}
-            {#                                <li style="padding-top: 7px; padding-bottom: 7px;"#}
-            {#                                    class="list-group-item list-group-item-{% if message.tags == 'info' %}info{% else %}danger{% endif %}">#}
-            {#                                    {{ message }}#}
-            {#                                </li>#}
-            {#                            </ul>#}
-            {#                        {% endfor %}#}
-            {#                    </div>#}
-            {#                </div>#}
-            {#            {% endif %}#}
-            <table class="table table-borderless">
-                <thead>
-                {% if servicos %}
-                    <tr>
-                        <th scope="col">Serviço</th>
-                        <th scope="col">Qtd</th>
-                        <th scope="col">Valor</th>
-                        <th scope="col"></th>
-                    </tr>
-                {% endif %}
-
-                </thead>
-                <tbody>
-                {% for servico, form in listas %}
-                    <tr>
-                        <td>{{ servico.nome }}</td>
-                        <td>
-                            <form class="mx-auto" style="width: 60px;"
-                                  action="{% url 'estetica:cadastro' %}"
-                                  method="POST" novalidate>
-                                {% csrf_token %}
-                                {{ form.quantidade }}
-                            </form>
-                        </td>
-                        <td>{{ servico.preco }}</td>
-                        <td>
-                            <a id="botao_remover" href="{% url 'estetica:servico_remover' servico.id %}"
-                               class="btn btn-outline-danger">
-                                Remover
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="2"></td>
-                    <td>{{ total }}</td>
-                </tr>
-                </tbody>
-            </table>
-{#            <div class='row' style='font-size: 14px;'>#}
-{#                <div class='col-12 pt-4'>#}
-{#                    {% if servicos.has_other_pages %}#}
-{#                        <ul class='pagination justify-content-center'>#}
-{#                            {% if servicos.has_previous %}#}
-{#                                <li class='page-item'><a class='page-link'#}
-{#                                                         href='?pagina={{ servicos.previous_page_number }}&nome={{ nome }}'>Anterior</a>#}
-{#                                </li>#}
-{#                            {% else %}#}
-{#                                <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Anterior</a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                            {% for i in servicos.paginator.page_range %}#}
-{#                                {% if servicos.number == i %}#}
-{#                                    <li class='page-item active'><a class='page-link' href='#'>{{ i }} </a></li>#}
-{#                                {% else %}#}
-{#                                    <li class='page-item'><a class='page-link'#}
-{#                                                             href='?pagina={{ i }}&nome={{ nome }}'>{{ i }}</a>#}
-{#                                    </li>#}
-{#                                {% endif %}#}
-{#                            {% endfor %}#}
-{#                            {% if servicos.has_next %}#}
-{#                                <li class='page-item'><a class='page-link'#}
-{#                                                         href='?pagina={{ servicos.next_page_number }}&nome={{ nome }}'>Próxima</a>#}
-{#                                </li>#}
-{#                            {% else %}#}
-{#                                <li class='page-item disabled'><a class='page-link' href='#' tabindex='-1'>Próxima</a>#}
-{#                                </li>#}
-{#                            {% endif %}#}
-{#                        </ul>#}
-{#                    {% endif %}#}
-{#                </div>#}
-{#            </div>#}
-
         </div>
     </div>
 {% endblock conteudo %}
 
-{#{% block domready %}#}
-{#    $("#botao").click(function() {#}
-{#    console.log("passei aqui")#}
-{#    $("#form").append('{{ form.servico_id }}')#}
-{#    $("#form").submit()#}
-{#    })#}
-{#{% endblock domready %}#}
+{% block domready %}
+    let ids_dos_produtos_no_carrinho = []
+    console.log(">>>>>>> " + ids_dos_produtos_no_carrinho)
+
+    $("#carrinho").on("click", "button.btn-remove", function() {
+    ids_dos_produtos_no_carrinho = []
+    let ids = $("#tbody2 td.id")
+    $.each( ids, function( i, val ) {
+    var id = parseInt($(val).text());
+    console.log("carrinho - id = " + id)
+    ids_dos_produtos_no_carrinho.push(id)
+    })
+    let form = $(this).parent();
+    let tr = $(form).parent().parent();
+    let ind = $(tr).index();
+    let valor_id = ids_dos_produtos_no_carrinho[ind];
+    let input = "<input type='hidden' name='servico_id' value='" + valor_id + "'>";
+    $(form).append(input);
+    let url = $(form).attr('action')
+    let formData = $(form).serializeArray()
+    $.post(url, formData, function(resposta) {
+    $("#carrinho").html(resposta)
+    ids_dos_produtos_no_carrinho = recuperaIds(resposta)
+    // console.log(ids_dos_produtos_no_carrinho)
+    })
+    })
+
+    $("#carrinho").on("blur", "input.quantidade", function() {
+    ids_dos_produtos_no_carrinho = []
+    let valor = $(this).val()
+    let ids = $("#tbody2 td.id")
+    $.each( ids, function( i, val ) {
+    var id = parseInt($(val).text());
+    console.log("carrinho - id = " + id)
+    ids_dos_produtos_no_carrinho.push(id)
+    })
+    if (valor < 1 || valor > 1000) {
+    $(this).focus()
+    return
+    }
+    let form = $(this).parent()
+    let tr = $(form).parent().parent();
+    let ind = $(tr).index();
+    let valor_id = ids_dos_produtos_no_carrinho[ind];
+    $(form).append("<input type='hidden' name='servico_id' value='" + valor_id + "'>")
+    let url = $(form).attr('action')
+    let formData = $(form).serializeArray()
+    $.post(url, formData, function(resposta) {
+    $("#carrinho").html(resposta)
+    ids_dos_produtos_no_carrinho = recuperaIds(resposta)
+    console.log(ids_dos_produtos_no_carrinho)
+    })
+    })
+
+    function recuperaIds(resposta) {
+    var ids = $(resposta).find("td.id")
+    var ids_dos_produtos_no_carrinho = []
+    $(ids).each(function() {
+    let id = parseInt($(this).text());
+    ids_dos_produtos_no_carrinho.push(id)
+    })
+    return ids_dos_produtos_no_carrinho
+    }
+{% endblock domready %}

@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block estilo %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/facial.css' %}"/>
+{#    <link rel="stylesheet" type="text/css" href="{% static 'css/facial.css' %}"/>#}
 {% endblock estilo %}
 
 {% block conteudo %}
@@ -29,15 +29,15 @@
                                 <img src="{{ baseUrl }}/{{ servico.imagem }}" class="card-img">
                             </div>
 
-                            <div class="col-6 d-none text-center d-md-inline-block">
+                            <div class="col-6 d-none text-center d-md-inline-block ">
                                 <div class="card-body">
-                                    <h4 class="card-title">{{ servico.nome }}</h4>
-                                    <p class="text-secondary font-weight-bold">R${{ servico.preco }}</p>
+                                    <h4 class="card-title pt-5">{{ servico.nome }}</h4>
+                                    <p class="text-secondary font-weight-bold pt-4">R${{ servico.preco }}</p>
                                     <div class="row">
-                                        <div class="offset-4 col-4">
+                                        <div width="15%" class="offset-5 col-4 text-center">
                                             {#                                        <input id="qtd" class="form-control" type="number" min="0" name="qtd">#}
 
-                                            <form id="form" action="{% url 'estetica:adicionar_ao_carrinho' %}"
+                                            <form id="form" style="width: 60px;" action="{% url 'estetica:adicionar_ao_carrinho' %}"
                                                   method="POST" novalidate>
                                                 {% csrf_token %}
                                                 {{ form_servico.quantidade }}
@@ -73,7 +73,6 @@
 
     $("#botao").click(function() {
     $("#form").append('{{ form_servico.servico_id }}')
-{#    $("#form").append('{{ form_servico.quantidade }}')#}
     $("#form").submit()
     })
 {% endblock %}

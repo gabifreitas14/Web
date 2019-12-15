@@ -31,8 +31,8 @@
                 <div class="col-12">
                     <form type="get" action="{% url 'estetica:pesquisa' %}" style="margin: 0">
                         <div class="input-group mb-3">
-{#                            <input id="input-pesquisa" name="input-pesquisa" type="text" class="form-control"#}
-{#                                   placeholder="Pesquise pelo nome do serviço">#}
+                            {#                            <input id="input-pesquisa" name="input-pesquisa" type="text" class="form-control"#}
+                            {#                                   placeholder="Pesquise pelo nome do serviço">#}
                             {{ form.nome }}
                             <div class="input-group-append">
                                 <button class="btn btn-outline-primary" type="submit" id="botao-pesquisa">
@@ -62,36 +62,39 @@
             <table class="table table-borderless">
                 <thead>
                 {% if servicos %}
-                 <tr>
-                    <th scope="col">Serviço</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Cadastrado por</th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                </tr>
+                    <tr>
+                        <th scope="col">Serviço</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Cadastrado por</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
                 {% endif %}
 
                 </thead>
                 <tbody>
                 {% for servico in servicos %}
-                    <tr>
-                        <td>{{ servico.nome }}</td>
-                        <td>{{ servico.tipo.nome }}</td>
-                        <td>{{ servico.user }}</td>
-                        <td>{{ servico.id }}</td>
-                        <td>
+                    <tr class="">
+                        <td class="pt-3">{{ servico.nome }}</td>
+                        <td class="pt-3">{{ servico.tipo.nome }}</td>
+                        <td class="pt-3">{{ servico.user }}</td>
+                        <td class="pt-3">{{ servico.id }}</td>
+                        <td class="pt-3">
                             <a id="botao_editar" href="{% url 'estetica:servico_editar' servico.id %}"
                                class="btn btn-outline-success mr-3">
                                 Editar
                             </a>
                         </td>
-                        <td>
+                        <td class="pt-3">
                             {% if user.username|stringformat:"s" == servico.user|stringformat:"s" %}
-                                <a id="botao_remover" href="{% url 'estetica:servico_remover' servico.id %}"
-                                   class="btn btn-outline-danger">
-                                    Remover
-                                </a>
-
+                                <form id="form_remover" action="{% url 'estetica:servico_remover' servico.id %}"
+                                      method="POST"
+                                      enctype="multipart/form-data" novalidate>
+                                    {% csrf_token %}
+                                    <button id="botao_remover" class="btn btn-outline-danger">
+                                        Remover
+                                    </button>
+                                </form>
                             {% else %}
                                 Não tem permissão
                             {% endif %}

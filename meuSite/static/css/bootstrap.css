@@ -162,14 +162,14 @@ sup {
 }
 
 a {
-  color: #78C2AD;
+  /* color: #78C2AD; */
   text-decoration: none;
   background-color: transparent;
 }
 
 a:hover {
   color: #4aa48a;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 a:not([href]):not([tabindex]) {
@@ -1677,7 +1677,7 @@ pre code {
 
 .table th,
 .table td {
-  padding: 0.75rem;
+  /* padding: 0.75rem; */
   vertical-align: top;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
